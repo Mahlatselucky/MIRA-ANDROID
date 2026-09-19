@@ -1,4 +1,4 @@
-package com.example.mira.ui.theme
+package com.mira.app.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

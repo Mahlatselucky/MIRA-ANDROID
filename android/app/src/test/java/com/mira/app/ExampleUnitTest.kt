@@ -1,4 +1,4 @@
-package com.example.mira
+package com.mira.app
 
 import org.junit.Test
 
