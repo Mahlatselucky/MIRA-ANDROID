@@ -1,0 +1,56 @@
+package com.mira.app.network
+
+import android.content.Context
+import com.mira.app.data.TokenManager
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+object RetrofitClient {
+
+    // Update this once Smilo deploys the backend to Render.
+    private const val BASE_URL = "http://10.0.2.2:5000/"
+
+    private var apiServiceInstance: ApiService? = null
+
+    fun init(context: Context) {
+        if (apiServiceInstance != null) return
+
+        val tokenManager = TokenManager.getInstance(context)
+
+        val authInterceptor = Interceptor { chain ->
+            val original = chain.request()
+            val token = tokenManager.getToken()
+            val request = if (token != null) {
+                original.newBuilder()
+                    .addHeader("Authorization", "Bearer $token")
+                    .build()
+            } else {
+                original
+            }
+            chain.proceed(request)
+        }
+
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(authInterceptor)
+            .addInterceptor(loggingInterceptor)
+            .build()
+
+        apiServiceInstance = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
+
+    val apiService: ApiService
+        get() = apiServiceInstance
+            ?: throw IllegalStateException("RetrofitClient.init(context) must be called before use")
+}
