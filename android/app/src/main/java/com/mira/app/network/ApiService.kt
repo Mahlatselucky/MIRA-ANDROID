@@ -3,7 +3,9 @@ package com.mira.app.network
 import com.mira.app.model.AuthResponse
 import com.mira.app.model.Comment
 import com.mira.app.model.CreateCommentRequest
+import com.mira.app.model.CreateJournalRequest
 import com.mira.app.model.CreatePostRequest
+import com.mira.app.model.JournalEntry
 import com.mira.app.model.LoginRequest
 import com.mira.app.model.MeTooResponse
 import com.mira.app.model.Post
@@ -62,4 +64,10 @@ interface ApiService {
         @Path("postId") postId: String,
         @Body body: CreateCommentRequest
     ): Response<Comment>
+
+    @GET("api/journal")
+    suspend fun getJournalEntries(): Response<List<JournalEntry>>
+
+    @POST("api/journal")
+    suspend fun createJournalEntry(@Body body: CreateJournalRequest): Response<JournalEntry>
 }

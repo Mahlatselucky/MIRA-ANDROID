@@ -85,3 +85,12 @@ data class PostDetail(
     val userHasTappedMeToo: Boolean,
     val comments: List<Comment>
 )
+
+data class JournalEntry(
+    val entryId: String,
+    val linkedRoomId: String?,
+    val content: String,
+    val createdAt: String
+)
+
+data class CreateJournalRequest(val content: String, val linkedRoomId: String? = null)

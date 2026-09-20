@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -20,6 +21,7 @@ import com.mira.app.network.RetrofitClient
 import com.mira.app.ui.auth.LoginScreen
 import com.mira.app.ui.auth.RegisterScreen
 import com.mira.app.ui.feed.RoomFeedScreen
+import com.mira.app.ui.journal.JournalScreen
 import com.mira.app.ui.post.CreatePostScreen
 import com.mira.app.ui.post.PostDetailScreen
 import com.mira.app.ui.rooms.RoomListScreen
@@ -73,41 +75,43 @@ fun MiraHome(onLogout: () -> Unit) {
     var selectedPost by remember { mutableStateOf<Post?>(null) }
     var screenState by remember { mutableStateOf(HomeScreenState.LIST) }
 
-    when (screenState) {
-        HomeScreenState.FEED -> {
-            RoomFeedScreen(
-                room = selectedRoom!!,
-                onBack = {
-                    selectedRoom = null
-                    screenState = HomeScreenState.LIST
-                },
-                onCreatePost = { screenState = HomeScreenState.CREATE_POST },
-                onPostClick = { post ->
-                    selectedPost = post
-                    screenState = HomeScreenState.POST_DETAIL
-                }
-            )
-            return
+    if (selectedTab == 0) {
+        when (screenState) {
+            HomeScreenState.FEED -> {
+                RoomFeedScreen(
+                    room = selectedRoom!!,
+                    onBack = {
+                        selectedRoom = null
+                        screenState = HomeScreenState.LIST
+                    },
+                    onCreatePost = { screenState = HomeScreenState.CREATE_POST },
+                    onPostClick = { post ->
+                        selectedPost = post
+                        screenState = HomeScreenState.POST_DETAIL
+                    }
+                )
+                return
+            }
+            HomeScreenState.CREATE_POST -> {
+                CreatePostScreen(
+                    room = selectedRoom!!,
+                    onBack = { screenState = HomeScreenState.FEED },
+                    onPostCreated = { screenState = HomeScreenState.FEED }
+                )
+                return
+            }
+            HomeScreenState.POST_DETAIL -> {
+                PostDetailScreen(
+                    post = selectedPost!!,
+                    onBack = {
+                        selectedPost = null
+                        screenState = HomeScreenState.FEED
+                    }
+                )
+                return
+            }
+            HomeScreenState.LIST -> Unit
         }
-        HomeScreenState.CREATE_POST -> {
-            CreatePostScreen(
-                room = selectedRoom!!,
-                onBack = { screenState = HomeScreenState.FEED },
-                onPostCreated = { screenState = HomeScreenState.FEED }
-            )
-            return
-        }
-        HomeScreenState.POST_DETAIL -> {
-            PostDetailScreen(
-                post = selectedPost!!,
-                onBack = {
-                    selectedPost = null
-                    screenState = HomeScreenState.FEED
-                }
-            )
-            return
-        }
-        HomeScreenState.LIST -> Unit
     }
 
     Scaffold(
@@ -122,6 +126,12 @@ fun MiraHome(onLogout: () -> Unit) {
                 NavigationBarItem(
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
+                    icon = { Icon(Icons.Default.MenuBook, contentDescription = "Journal") },
+                    label = { Text("Journal") }
+                )
+                NavigationBarItem(
+                    selected = selectedTab == 2,
+                    onClick = { selectedTab = 2 },
                     icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
                     label = { Text("Settings") }
                 )
@@ -136,7 +146,8 @@ fun MiraHome(onLogout: () -> Unit) {
                         screenState = HomeScreenState.FEED
                     }
                 )
-                1 -> SettingsScreen(onLogout = onLogout)
+                1 -> JournalScreen()
+                2 -> SettingsScreen(onLogout = onLogout)
             }
         }
     }
