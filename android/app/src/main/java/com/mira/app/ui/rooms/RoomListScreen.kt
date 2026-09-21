@@ -121,7 +121,7 @@ private fun RoomCard(room: Room, onClick: () -> Unit) {
             Text(text = room.name, fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = if (room.postCount == 1) "1 person here" else "${room.postCount} people here",
+                text = if (room.postCount == 1) "1 post" else "${room.postCount} posts",
                 fontSize = 13.sp,
                 color = TextSecondary
             )
