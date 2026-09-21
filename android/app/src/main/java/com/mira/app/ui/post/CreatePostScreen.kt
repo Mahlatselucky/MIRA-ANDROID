@@ -118,6 +118,7 @@ fun CreatePostScreen(
                                 errorMessage = "Could not create post, please try again"
                             }
                         } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in CreatePostScreen", e)
                             errorMessage = "Could not reach the server. Check your connection."
                         } finally {
                             isLoading = false

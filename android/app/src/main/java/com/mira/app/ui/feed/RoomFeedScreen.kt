@@ -50,6 +50,7 @@ fun RoomFeedScreen(
                 errorMessage = "Could not load posts"
             }
         } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in RoomFeedScreen", e)
             errorMessage = "Could not reach the server. Check your connection."
         } finally {
             isLoading = false
@@ -148,6 +149,7 @@ fun RoomFeedScreen(
                                             }
                                         }
                                     } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in RoomFeedScreen", e)
                                         // silently ignore for now, tap will just not update
                                     }
                                 }

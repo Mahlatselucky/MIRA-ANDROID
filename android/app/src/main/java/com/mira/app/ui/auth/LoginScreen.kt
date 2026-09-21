@@ -126,6 +126,7 @@ fun LoginScreen(
                             errorMessage = "Invalid email or password"
                         }
                     } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in LoginScreen", e)
                         errorMessage = "Could not reach the server. Check your connection."
                     } finally {
                         isLoading = false

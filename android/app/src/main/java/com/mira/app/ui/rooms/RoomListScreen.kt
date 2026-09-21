@@ -35,6 +35,7 @@ fun RoomListScreen(
                     val count = try {
                         RetrofitClient.apiService.getRoomPosts(r.roomId).body()?.size ?: 0
                     } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in RoomListScreen", e)
                         0
                     }
                     r.copy(postCount = count)
@@ -43,6 +44,7 @@ fun RoomListScreen(
                 errorMessage = "Could not load rooms"
             }
         } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in RoomListScreen", e)
             errorMessage = "Could not reach the server. Check your connection."
         } finally {
             isLoading = false

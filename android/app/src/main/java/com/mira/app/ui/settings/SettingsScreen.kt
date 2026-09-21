@@ -42,6 +42,7 @@ fun SettingsScreen(
                 notificationsEnabled = response.body()!!.notificationsEnabled
             }
         } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in SettingsScreen", e)
             statusMessage = "Could not load settings"
         }
     }
@@ -143,6 +144,7 @@ fun SettingsScreen(
                             )
                             statusMessage = if (response.isSuccessful) "Settings saved" else "Could not save settings"
                         } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in SettingsScreen", e)
                             statusMessage = "Could not reach the server"
                         } finally {
                             isLoading = false

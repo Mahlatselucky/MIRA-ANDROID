@@ -133,6 +133,7 @@ fun PostDetailScreen(
                                         )
                                     }
                                 } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in PostDetailScreen", e)
                                     // silently ignore, tap just won't update
                                 }
                             }
@@ -229,6 +230,7 @@ fun PostDetailScreen(
                                 commentText = ""
                             }
                         } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in PostDetailScreen", e)
                             // silently ignore for now
                         } finally {
                             isSendingComment = false

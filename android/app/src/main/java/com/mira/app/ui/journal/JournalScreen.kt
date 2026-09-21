@@ -41,6 +41,7 @@ fun JournalScreen() {
                 errorMessage = "Could not load journal entries"
             }
         } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in JournalScreen", e)
             errorMessage = "Could not reach the server. Check your connection."
         } finally {
             isLoading = false
@@ -173,6 +174,7 @@ fun JournalScreen() {
                             entries = listOf(response.body()!!) + entries
                         }
                     } catch (e: Exception) {
+            android.util.Log.e("MIRA", "Request failed in JournalScreen", e)
                         // silently ignore for now
                     } finally {
                         showNewEntryDialog = false
