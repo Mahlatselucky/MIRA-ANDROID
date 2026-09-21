@@ -7,20 +7,22 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mira.app.model.Post
 import com.mira.app.model.Room
 import com.mira.app.network.RetrofitClient
+import com.mira.app.ui.theme.Cream
+import com.mira.app.ui.theme.Terracotta
+import com.mira.app.ui.theme.TextSecondary
 import kotlinx.coroutines.launch
 
 @Composable
@@ -34,6 +36,12 @@ fun RoomFeedScreen(
     var isLoading by remember { mutableStateOf(true) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
+
+    val roomColor = try {
+        Color(android.graphics.Color.parseColor(room.colorTag))
+    } catch (e: Exception) {
+        Color.Gray
+    }
 
     suspend fun loadPosts() {
         try {
@@ -56,28 +64,39 @@ fun RoomFeedScreen(
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .background(roomColor)
+                .padding(16.dp)
         ) {
-            IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back", tint = Cream)
+                }
+                Text(
+                    text = room.name,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Cream,
+                    modifier = Modifier.padding(start = 4.dp)
+                )
             }
-            Column(modifier = Modifier.padding(start = 8.dp)) {
-                Text(text = room.name, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Text(text = "You're not the only one.", fontSize = 12.sp)
-            }
+            Text(
+                text = "You're not the only one.",
+                fontSize = 13.sp,
+                color = Cream,
+                modifier = Modifier.padding(start = 52.dp, top = 2.dp)
+            )
         }
 
         if (room.isSensitive && !room.crisisResourceLink.isNullOrBlank()) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 8.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.secondaryContainer)
+                    .padding(horizontal = 16.dp, vertical = 10.dp)
+                    .clip(RoundedCornerShape(10.dp))
+                    .background(Terracotta.copy(alpha = 0.15f))
                     .padding(12.dp)
             ) {
                 Text(text = room.crisisResourceLink, fontSize = 12.sp)
@@ -87,28 +106,34 @@ fun RoomFeedScreen(
         when {
             isLoading -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator()
+                    CircularProgressIndicator(color = roomColor)
                 }
             }
             errorMessage != null -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = errorMessage!!, fontSize = 14.sp)
+                    Text(text = errorMessage!!, fontSize = 14.sp, color = TextSecondary)
                 }
             }
             posts.isEmpty() -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = "No posts here yet. Be the first to share.", fontSize = 14.sp)
+                    Text(
+                        text = "No posts here yet.\nBe the first to share.",
+                        fontSize = 15.sp,
+                        color = TextSecondary,
+                        modifier = Modifier.padding(horizontal = 32.dp)
+                    )
                 }
             }
             else -> {
                 LazyColumn(
                     modifier = Modifier.weight(1f),
-                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(10.dp)
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 12.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     items(posts) { post ->
                         PostCard(
                             post = post,
+                            roomColor = roomColor,
                             onClick = { onPostClick(post) },
                             onMeTooClick = {
                                 scope.launch {
@@ -138,39 +163,68 @@ fun RoomFeedScreen(
 
         Button(
             onClick = onCreatePost,
+            colors = ButtonDefaults.buttonColors(containerColor = roomColor),
+            shape = RoundedCornerShape(24.dp),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         ) {
-            Text("Share what's on your mind")
+            Text("Share what's on your mind", color = Cream)
         }
     }
 }
 
 @Composable
-private fun PostCard(post: Post, onClick: () -> Unit, onMeTooClick: () -> Unit) {
+private fun PostCard(post: Post, roomColor: Color, onClick: () -> Unit, onMeTooClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
+            .clip(RoundedCornerShape(16.dp))
             .background(MaterialTheme.colorScheme.surface)
             .clickable { onClick() }
-            .padding(16.dp)
     ) {
-        Text(text = post.authorSessionAlias, fontSize = 12.sp, fontWeight = FontWeight.Medium)
-        Spacer(modifier = Modifier.height(6.dp))
-        Text(text = post.content, fontSize = 15.sp)
-        Spacer(modifier = Modifier.height(10.dp))
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onMeTooClick, modifier = Modifier.size(28.dp)) {
-                Icon(
-                    imageVector = if (post.userHasTappedMeToo) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = "Me too"
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(4.dp)
+                .background(roomColor)
+        )
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(
+                text = post.authorSessionAlias,
+                fontSize = 12.sp,
+                fontWeight = FontWeight.Medium,
+                color = roomColor
+            )
+            Spacer(modifier = Modifier.height(6.dp))
+            Text(text = post.content, fontSize = 15.sp, lineHeight = 21.sp)
+            Spacer(modifier = Modifier.height(12.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(50))
+                        .background(
+                            if (post.userHasTappedMeToo) roomColor.copy(alpha = 0.25f)
+                            else MaterialTheme.colorScheme.background
+                        )
+                        .clickable { onMeTooClick() }
+                        .padding(horizontal = 14.dp, vertical = 6.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Me too ${post.meTooCount}",
+                        fontSize = 13.sp,
+                        fontWeight = if (post.userHasTappedMeToo) FontWeight.Bold else FontWeight.Normal,
+                        color = if (post.userHasTappedMeToo) roomColor else TextSecondary
+                    )
+                }
+                Spacer(modifier = Modifier.width(12.dp))
+                Text(
+                    text = "${post.commentCount} comments",
+                    fontSize = 13.sp,
+                    color = TextSecondary
                 )
             }
-            Text(text = "Me too ${post.meTooCount}", fontSize = 13.sp)
-            Spacer(modifier = Modifier.width(16.dp))
-            Text(text = "${post.commentCount} comments", fontSize = 13.sp)
         }
     }
 }

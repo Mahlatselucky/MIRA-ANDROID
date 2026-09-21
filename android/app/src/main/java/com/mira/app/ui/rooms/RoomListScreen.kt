@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mira.app.model.Room
 import com.mira.app.network.RetrofitClient
+import com.mira.app.ui.theme.TextSecondary
 
 @Composable
 fun RoomListScreen(
@@ -44,7 +45,11 @@ fun RoomListScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(24.dp)) {
             Text(text = "Rooms", fontSize = 28.sp, fontWeight = FontWeight.Bold)
-            Text(text = "Pick a space that fits what you're going through", fontSize = 14.sp)
+            Text(
+                text = "Pick a space that fits what you're going through",
+                fontSize = 14.sp,
+                color = TextSecondary
+            )
         }
 
         when {
@@ -55,21 +60,21 @@ fun RoomListScreen(
             }
             errorMessage != null -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = errorMessage!!, fontSize = 14.sp)
+                    Text(text = errorMessage!!, fontSize = 14.sp, color = TextSecondary)
                 }
             }
             rooms.isEmpty() -> {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = "No rooms available yet", fontSize = 14.sp)
+                    Text(text = "No rooms available yet", fontSize = 14.sp, color = TextSecondary)
                 }
             }
             else -> {
                 LazyColumn(
-                    contentPadding = PaddingValues(horizontal = 24.dp, vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    contentPadding = PaddingValues(horizontal = 20.dp, vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(14.dp)
                 ) {
                     items(rooms) { room ->
-                        RoomRow(room = room, onClick = { onRoomClick(room) })
+                        RoomCard(room = room, onClick = { onRoomClick(room) })
                     }
                 }
             }
@@ -78,7 +83,7 @@ fun RoomListScreen(
 }
 
 @Composable
-private fun RoomRow(room: Room, onClick: () -> Unit) {
+private fun RoomCard(room: Room, onClick: () -> Unit) {
     val tagColor = try {
         Color(android.graphics.Color.parseColor(room.colorTag))
     } catch (e: Exception) {
@@ -88,23 +93,27 @@ private fun RoomRow(room: Room, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(12.dp))
-            .background(MaterialTheme.colorScheme.surface)
+            .clip(RoundedCornerShape(18.dp))
+            .background(tagColor.copy(alpha = 0.16f))
             .clickable { onClick() }
-            .padding(16.dp),
+            .padding(18.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(
             modifier = Modifier
-                .width(4.dp)
-                .height(40.dp)
-                .clip(RoundedCornerShape(2.dp))
+                .size(48.dp)
+                .clip(RoundedCornerShape(14.dp))
                 .background(tagColor)
         )
         Spacer(modifier = Modifier.width(16.dp))
-        Column {
-            Text(text = room.name, fontSize = 16.sp, fontWeight = FontWeight.Medium)
-            Text(text = "${room.postCount} people here", fontSize = 13.sp)
+        Column(modifier = Modifier.weight(1f)) {
+            Text(text = room.name, fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
+            Spacer(modifier = Modifier.height(2.dp))
+            Text(
+                text = if (room.postCount == 1) "1 person here" else "${room.postCount} people here",
+                fontSize = 13.sp,
+                color = TextSecondary
+            )
         }
     }
 }

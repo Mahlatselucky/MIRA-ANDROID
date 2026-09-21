@@ -1,23 +1,30 @@
 package com.mira.app.ui.auth
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mira.app.R
 import com.mira.app.model.RegisterRequest
 import com.mira.app.network.RetrofitClient
+import com.mira.app.ui.theme.Cream
+import com.mira.app.ui.theme.Terracotta
+import com.mira.app.ui.theme.TextSecondary
 import kotlinx.coroutines.launch
-import androidx.compose.foundation.Image
-import androidx.compose.ui.res.painterResource
-import com.mira.app.R
+
 @Composable
 fun RegisterScreen(
     onRegisterSuccess: (token: String) -> Unit,
@@ -31,9 +38,18 @@ fun RegisterScreen(
     val scope = rememberCoroutineScope()
     val context = androidx.compose.ui.platform.LocalContext.current
 
+    val fieldColors = OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = Terracotta,
+        unfocusedBorderColor = Terracotta.copy(alpha = 0.4f),
+        focusedLabelColor = Terracotta,
+        focusedContainerColor = Color.White,
+        unfocusedContainerColor = Color.White
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Cream)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -49,11 +65,13 @@ fun RegisterScreen(
         Text(
             text = "Create your account",
             fontSize = 26.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Terracotta
         )
         Text(
             text = "Your login is private. What you post stays anonymous.",
             fontSize = 13.sp,
+            color = TextSecondary,
             textAlign = TextAlign.Center,
             modifier = Modifier.padding(top = 8.dp, bottom = 32.dp)
         )
@@ -64,6 +82,8 @@ fun RegisterScreen(
             label = { Text("Email") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             singleLine = true,
+            shape = RoundedCornerShape(16.dp),
+            colors = fieldColors,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -76,6 +96,8 @@ fun RegisterScreen(
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
+            shape = RoundedCornerShape(16.dp),
+            colors = fieldColors,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -88,6 +110,8 @@ fun RegisterScreen(
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
+            shape = RoundedCornerShape(16.dp),
+            colors = fieldColors,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -137,15 +161,25 @@ fun RegisterScreen(
                 }
             },
             enabled = !isLoading,
-            modifier = Modifier.fillMaxWidth()
+            shape = RoundedCornerShape(50),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Terracotta,
+                contentColor = Color.White
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(52.dp)
         ) {
-            Text(if (isLoading) "Creating account..." else "Register")
+            Text(
+                if (isLoading) "Creating account..." else "Register",
+                fontWeight = FontWeight.SemiBold
+            )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         TextButton(onClick = onNavigateToLogin) {
-            Text("Already have an account? Log in")
+            Text("Already have an account? Log in", color = Terracotta)
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.mira.app.ui.post
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -15,6 +16,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,6 +24,9 @@ import com.mira.app.model.Comment
 import com.mira.app.model.CreateCommentRequest
 import com.mira.app.model.Post
 import com.mira.app.network.RetrofitClient
+import com.mira.app.ui.theme.Cream
+import com.mira.app.ui.theme.Terracotta
+import com.mira.app.ui.theme.TextSecondary
 import kotlinx.coroutines.launch
 
 @Composable
@@ -58,22 +63,37 @@ fun PostDetailScreen(
         }
     }
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Cream)
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .background(Terracotta)
+                .padding(horizontal = 12.dp, vertical = 20.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                Icon(
+                    Icons.Default.ArrowBack,
+                    contentDescription = "Back",
+                    tint = Color.White
+                )
             }
-            Text(text = "Post", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Text(
+                text = "Post",
+                fontSize = 22.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier.padding(start = 8.dp)
+            )
         }
 
         if (isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(color = Terracotta)
             }
             return@Column
         }
@@ -84,30 +104,40 @@ fun PostDetailScreen(
                     .fillMaxWidth()
                     .padding(24.dp)
             ) {
-                Text(text = it, fontSize = 14.sp)
+                Text(text = it, fontSize = 14.sp, color = MaterialTheme.colorScheme.error)
             }
         }
 
         Column(
             modifier = Modifier
                 .weight(1f)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 16.dp, vertical = 16.dp)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(MaterialTheme.colorScheme.surface)
-                    .padding(16.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(Color.White)
+                    .padding(18.dp)
             ) {
-                Text(text = currentPost.authorSessionAlias, fontSize = 12.sp, fontWeight = FontWeight.Medium)
-                Spacer(modifier = Modifier.height(6.dp))
-                Text(text = currentPost.content, fontSize = 15.sp)
-                Spacer(modifier = Modifier.height(10.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    IconButton(
-                        modifier = Modifier.size(28.dp),
-                        onClick = {
+                Text(
+                    text = currentPost.authorSessionAlias,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = TextSecondary
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(text = currentPost.content, fontSize = 16.sp)
+                Spacer(modifier = Modifier.height(14.dp))
+
+                Row(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(50))
+                        .background(
+                            if (currentPost.userHasTappedMeToo) Terracotta
+                            else Terracotta.copy(alpha = 0.16f)
+                        )
+                        .clickable {
                             scope.launch {
                                 try {
                                     val response = RetrofitClient.apiService.toggleMeToo(currentPost.postId)
@@ -123,33 +153,52 @@ fun PostDetailScreen(
                                 }
                             }
                         }
-                    ) {
-                        Icon(
-                            imageVector = if (currentPost.userHasTappedMeToo) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
-                            contentDescription = "Me too"
-                        )
-                    }
-                    Text(text = "Me too ${currentPost.meTooCount}", fontSize = 13.sp)
+                        .padding(horizontal = 14.dp, vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = if (currentPost.userHasTappedMeToo) Icons.Default.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Me too",
+                        tint = if (currentPost.userHasTappedMeToo) Color.White else Terracotta,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Text(
+                        text = "Me too ${currentPost.meTooCount}",
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = if (currentPost.userHasTappedMeToo) Color.White else Terracotta
+                    )
                 }
             }
 
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             if (comments.isEmpty()) {
-                Text(text = "No comments yet.", fontSize = 13.sp, modifier = Modifier.padding(vertical = 12.dp))
+                Text(
+                    text = "No comments yet.",
+                    fontSize = 13.sp,
+                    color = TextSecondary,
+                    modifier = Modifier.padding(vertical = 12.dp)
+                )
             } else {
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(10.dp)
                 ) {
                     items(comments) { comment ->
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clip(RoundedCornerShape(10.dp))
-                                .background(MaterialTheme.colorScheme.surface)
-                                .padding(12.dp)
+                                .clip(RoundedCornerShape(16.dp))
+                                .background(Color.White)
+                                .padding(14.dp)
                         ) {
-                            Text(text = comment.authorSessionAlias, fontSize = 11.sp, fontWeight = FontWeight.Medium)
+                            Text(
+                                text = comment.authorSessionAlias,
+                                fontSize = 11.sp,
+                                fontWeight = FontWeight.Medium,
+                                color = TextSecondary
+                            )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(text = comment.content, fontSize = 14.sp)
                         }
@@ -161,15 +210,22 @@ fun PostDetailScreen(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             OutlinedTextField(
                 value = commentText,
                 onValueChange = { commentText = it },
-                placeholder = { Text("Add an anonymous comment...") },
+                placeholder = { Text("Add an anonymous comment...", color = TextSecondary) },
                 modifier = Modifier.weight(1f),
-                singleLine = true
+                singleLine = true,
+                shape = RoundedCornerShape(50),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Terracotta,
+                    unfocusedBorderColor = Terracotta.copy(alpha = 0.4f),
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White
+                )
             )
             Spacer(modifier = Modifier.width(8.dp))
             IconButton(
@@ -196,7 +252,11 @@ fun PostDetailScreen(
                     }
                 }
             ) {
-                Icon(Icons.Default.Send, contentDescription = "Send")
+                Icon(
+                    Icons.Default.Send,
+                    contentDescription = "Send",
+                    tint = if (!isSendingComment && commentText.isNotBlank()) Terracotta else TextSecondary
+                )
             }
         }
     }

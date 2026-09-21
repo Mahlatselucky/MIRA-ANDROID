@@ -1,23 +1,29 @@
 package com.mira.app.ui.auth
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mira.app.R
 import com.mira.app.model.LoginRequest
 import com.mira.app.network.RetrofitClient
+import com.mira.app.ui.theme.Cream
+import com.mira.app.ui.theme.Terracotta
+import com.mira.app.ui.theme.TextSecondary
 import kotlinx.coroutines.launch
-import androidx.compose.foundation.Image
-import androidx.compose.ui.res.painterResource
-import com.mira.app.R
+
 @Composable
 fun LoginScreen(
     onLoginSuccess: (token: String) -> Unit,
@@ -30,9 +36,18 @@ fun LoginScreen(
     val scope = rememberCoroutineScope()
     val context = androidx.compose.ui.platform.LocalContext.current
 
+    val fieldColors = OutlinedTextFieldDefaults.colors(
+        focusedBorderColor = Terracotta,
+        unfocusedBorderColor = Terracotta.copy(alpha = 0.4f),
+        focusedLabelColor = Terracotta,
+        focusedContainerColor = Color.White,
+        unfocusedContainerColor = Color.White
+    )
+
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(Cream)
             .padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -48,11 +63,13 @@ fun LoginScreen(
         Text(
             text = "Welcome",
             fontSize = 36.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            color = Terracotta
         )
         Text(
             text = "You're not the only one.",
             fontSize = 17.sp,
+            color = TextSecondary,
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
@@ -62,6 +79,8 @@ fun LoginScreen(
             label = { Text("Email") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             singleLine = true,
+            shape = RoundedCornerShape(16.dp),
+            colors = fieldColors,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -74,6 +93,8 @@ fun LoginScreen(
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
+            shape = RoundedCornerShape(16.dp),
+            colors = fieldColors,
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -112,24 +133,33 @@ fun LoginScreen(
                 }
             },
             enabled = !isLoading,
-            modifier = Modifier.fillMaxWidth()
+            shape = RoundedCornerShape(50),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Terracotta,
+                contentColor = Color.White
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(52.dp)
         ) {
-            Text(if (isLoading) "Logging in..." else "Log in")
+            Text(
+                if (isLoading) "Logging in..." else "Log in",
+                fontWeight = FontWeight.SemiBold
+            )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(12.dp))
 
         TextButton(onClick = onNavigateToRegister) {
-            Text("Don't have an account? Register")
+            Text("Don't have an account? Register", color = Terracotta)
         }
-
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // TEMPORARY - remove before final submission. Lets us preview
         // screens while Smilo's & Isam backend isn't live yet.
         TextButton(onClick = { onLoginSuccess("dev-preview-token") }) {
-            Text("Skip login (dev preview only)", fontSize = 12.sp)
+            Text("Skip login (dev preview only)", fontSize = 12.sp, color = TextSecondary)
         }
     }
 }
