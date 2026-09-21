@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    // Update this once Smilo deploys the backend to Render.
+    
     private const val BASE_URL = "https://mira-android.onrender.com/"
 
     private var apiServiceInstance: ApiService? = null
