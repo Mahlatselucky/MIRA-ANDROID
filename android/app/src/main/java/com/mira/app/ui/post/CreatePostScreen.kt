@@ -139,14 +139,6 @@ fun CreatePostScreen(
                     fontWeight = FontWeight.SemiBold
                 )
             }
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Text(
-                text = "Save as draft if you're offline, it'll send once you're back online.",
-                fontSize = 12.sp,
-                color = TextSecondary
-            )
         }
     }
 }
