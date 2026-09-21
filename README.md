@@ -41,7 +41,7 @@ Settings
 
 ## Features in this prototype
 
-* Register and log in with an email and password. Passwords are hashed on the server before they are stored. [CONFIRM WITH ISAM BEFORE SUBMITTING]
+* Register and log in with an email and password. Passwords are hashed on the server before they are stored. ****
 * The login token is saved on the phone, so the user stays signed in until they log out.
 * A settings screen where the user picks a preferred language and turns notifications on or off. The choices are saved to the server.
 * Five rooms: Anxiety & Depression, Skin & Acne, Family Issues, Gambling and Substance Abuse.
