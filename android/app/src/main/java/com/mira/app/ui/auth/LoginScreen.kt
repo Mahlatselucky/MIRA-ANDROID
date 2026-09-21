@@ -153,13 +153,5 @@ fun LoginScreen(
         TextButton(onClick = onNavigateToRegister) {
             Text("Don't have an account? Register", color = Terracotta)
         }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // TEMPORARY - remove before final submission. Lets us preview
-        // screens while Smilo's & Isam backend isn't live yet.
-        TextButton(onClick = { onLoginSuccess("dev-preview-token") }) {
-            Text("Skip login (dev preview only)", fontSize = 12.sp, color = TextSecondary)
-        }
     }
 }

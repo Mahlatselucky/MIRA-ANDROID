@@ -31,7 +31,14 @@ fun RoomListScreen(
         try {
             val response = RetrofitClient.apiService.getRooms()
             if (response.isSuccessful && response.body() != null) {
-                rooms = response.body()!!
+                rooms = response.body()!!.map { r ->
+                    val count = try {
+                        RetrofitClient.apiService.getRoomPosts(r.roomId).body()?.size ?: 0
+                    } catch (e: Exception) {
+                        0
+                    }
+                    r.copy(postCount = count)
+                }
             } else {
                 errorMessage = "Could not load rooms"
             }
@@ -84,11 +91,7 @@ fun RoomListScreen(
 
 @Composable
 private fun RoomCard(room: Room, onClick: () -> Unit) {
-    val tagColor = try {
-        Color(android.graphics.Color.parseColor(room.colorTag))
-    } catch (e: Exception) {
-        Color.Gray
-    }
+    val tagColor = roomAccentColor(room)
 
     Row(
         modifier = Modifier
@@ -103,8 +106,16 @@ private fun RoomCard(room: Room, onClick: () -> Unit) {
             modifier = Modifier
                 .size(48.dp)
                 .clip(RoundedCornerShape(14.dp))
-                .background(tagColor)
-        )
+                .background(tagColor),
+            contentAlignment = Alignment.Center
+        ) {
+            Icon(
+                imageVector = roomIcon(room),
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.size(26.dp)
+            )
+        }
         Spacer(modifier = Modifier.width(16.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(text = room.name, fontSize = 17.sp, fontWeight = FontWeight.SemiBold)

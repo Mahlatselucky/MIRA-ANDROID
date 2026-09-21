@@ -25,49 +25,48 @@ import retrofit2.http.Query
 
 interface ApiService {
 
-    @POST("api/auth/register")
+    @POST("register")
     suspend fun register(@Body body: RegisterRequest): Response<AuthResponse>
 
-    @POST("api/auth/login")
+    @POST("login")
     suspend fun login(@Body body: LoginRequest): Response<AuthResponse>
 
-    @GET("api/user/settings")
+    @GET("settings")
     suspend fun getSettings(): Response<SettingsResponse>
 
-    @PUT("api/user/settings")
+    @PUT("settings")
     suspend fun updateSettings(@Body body: UpdateSettingsRequest): Response<SettingsResponse>
 
-    @GET("api/rooms")
+    @GET("rooms")
     suspend fun getRooms(): Response<List<Room>>
 
-    @GET("api/rooms/{roomId}/posts")
+    @GET("rooms/{roomId}/posts")
     suspend fun getRoomPosts(
         @Path("roomId") roomId: String,
         @Query("page") page: Int = 1,
         @Query("limit") limit: Int = 20
-    ): Response<PostFeedResponse>
+    ): Response<List<com.mira.app.model.Post>>
 
-    @POST("api/rooms/{roomId}/posts")
+    @POST("posts")
     suspend fun createPost(
-        @Path("roomId") roomId: String,
         @Body body: CreatePostRequest
     ): Response<Post>
 
-    @GET("api/posts/{postId}")
+    @GET("posts/{postId}")
     suspend fun getPostDetail(@Path("postId") postId: String): Response<PostDetail>
 
-    @POST("api/posts/{postId}/metoo")
-    suspend fun toggleMeToo(@Path("postId") postId: String): Response<MeTooResponse>
+    @PUT("posts/{postId}/metoo")
+    suspend fun toggleMeToo(@Path("postId") postId: String): Response<Post>
 
-    @POST("api/posts/{postId}/comments")
+    @POST("posts/{postId}/comments")
     suspend fun addComment(
         @Path("postId") postId: String,
         @Body body: CreateCommentRequest
-    ): Response<Comment>
+    ): Response<Post>
 
-    @GET("api/journal")
+    @GET("journal")
     suspend fun getJournalEntries(): Response<List<JournalEntry>>
 
-    @POST("api/journal")
+    @POST("journal")
     suspend fun createJournalEntry(@Body body: CreateJournalRequest): Response<JournalEntry>
 }

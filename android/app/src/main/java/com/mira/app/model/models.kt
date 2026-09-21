@@ -1,5 +1,6 @@
-
 package com.mira.app.model
+
+import com.google.gson.annotations.SerializedName
 
 data class RegisterRequest(
     val email: String,
@@ -12,85 +13,96 @@ data class LoginRequest(
 )
 
 data class UserSummary(
-    val userId: String,
-    val email: String,
-    val preferredLanguage: String
+    @SerializedName(value = "userId", alternate = ["_id", "id"])
+    val userId: String = "",
+    val email: String = "",
+    val preferredLanguage: String = "en"
 )
 
 data class AuthResponse(
     val token: String,
-    val user: UserSummary
+    val user: UserSummary? = null
 )
+
 data class SettingsResponse(
-    val preferredLanguage: String,
-    val notificationsEnabled: Boolean
+    val preferredLanguage: String = "en",
+    val notificationsEnabled: Boolean = true
 )
 
 data class UpdateSettingsRequest(
     val preferredLanguage: String? = null,
     val notificationsEnabled: Boolean? = null
 )
+
 data class Room(
-    val roomId: String,
-    val name: String,
-    val description: String,
-    val colorTag: String,
-    val isSensitive: Boolean,
-    val crisisResourceLink: String?,
-    val postCount: Int
+    @SerializedName(value = "roomId", alternate = ["_id", "id"])
+    val roomId: String = "",
+    val name: String = "",
+    val description: String = "",
+    val colorTag: String = "",
+    val isSensitive: Boolean = false,
+    val crisisResourceLink: String? = null,
+    val postCount: Int = 0
+)
+
+data class Comment(
+    @SerializedName(value = "commentId", alternate = ["_id", "id"])
+    val commentId: String = "",
+    val postId: String = "",
+    val authorSessionAlias: String = "Anonymous",
+    @SerializedName(value = "content", alternate = ["comment", "text"])
+    val content: String = "",
+    val createdAt: String = ""
 )
 
 data class Post(
-    val postId: String,
-    val roomId: String,
-    val authorSessionAlias: String,
-    val content: String,
-    val meTooCount: Int,
-    val commentCount: Int,
-    val createdAt: String,
-    val userHasTappedMeToo: Boolean
+    @SerializedName(value = "postId", alternate = ["_id", "id"])
+    val postId: String = "",
+    val roomId: String = "",
+    val authorSessionAlias: String = "Anonymous",
+    val content: String = "",
+    val meTooCount: Int = 0,
+    val commentCount: Int = 0,
+    val createdAt: String = "",
+    val userHasTappedMeToo: Boolean = false,
+    val comments: List<Comment> = emptyList()
 )
 
 data class PostFeedResponse(
-    val page: Int,
-    val limit: Int,
-    val posts: List<Post>
+    val page: Int = 1,
+    val limit: Int = 20,
+    val posts: List<Post> = emptyList()
 )
 
 data class MeTooResponse(
-    val meTooCount: Int,
-    val userHasTappedMeToo: Boolean
+    val meTooCount: Int = 0,
+    val userHasTappedMeToo: Boolean = false
 )
 
-data class CreatePostRequest(val content: String)
+data class CreatePostRequest(val roomId: String, val content: String)
 
-data class Comment(
-    val commentId: String,
-    val postId: String,
-    val authorSessionAlias: String,
-    val content: String,
-    val createdAt: String
-)
-
-data class CreateCommentRequest(val content: String)
+data class CreateCommentRequest(val comment: String)
 
 data class PostDetail(
-    val postId: String,
-    val roomId: String,
-    val authorSessionAlias: String,
-    val content: String,
-    val meTooCount: Int,
-    val commentCount: Int,
-    val createdAt: String,
-    val userHasTappedMeToo: Boolean,
-    val comments: List<Comment>
+    @SerializedName(value = "postId", alternate = ["_id", "id"])
+    val postId: String = "",
+    val roomId: String = "",
+    val authorSessionAlias: String = "Anonymous",
+    val content: String = "",
+    val meTooCount: Int = 0,
+    val commentCount: Int = 0,
+    val createdAt: String = "",
+    val userHasTappedMeToo: Boolean = false,
+    val comments: List<Comment> = emptyList()
 )
 
 data class JournalEntry(
-    val entryId: String,
-    val linkedRoomId: String?,
-    val content: String,
-    val createdAt: String
+    @SerializedName(value = "entryId", alternate = ["_id", "id"])
+    val entryId: String = "",
+    val linkedRoomId: String? = null,
+    @SerializedName(value = "content", alternate = ["entry", "text"])
+    val content: String = "",
+    val createdAt: String = ""
 )
 
-data class CreateJournalRequest(val content: String, val linkedRoomId: String? = null)
+data class CreateJournalRequest(val entry: String, val linkedRoomId: String? = null)

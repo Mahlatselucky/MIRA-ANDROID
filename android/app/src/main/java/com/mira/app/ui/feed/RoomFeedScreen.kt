@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.mira.app.model.Post
 import com.mira.app.model.Room
 import com.mira.app.network.RetrofitClient
+import com.mira.app.ui.rooms.roomAccentColor
 import com.mira.app.ui.theme.Cream
 import com.mira.app.ui.theme.Terracotta
 import com.mira.app.ui.theme.TextSecondary
@@ -37,17 +38,13 @@ fun RoomFeedScreen(
     var errorMessage by remember { mutableStateOf<String?>(null) }
     val scope = rememberCoroutineScope()
 
-    val roomColor = try {
-        Color(android.graphics.Color.parseColor(room.colorTag))
-    } catch (e: Exception) {
-        Color.Gray
-    }
+    val roomColor = roomAccentColor(room)
 
     suspend fun loadPosts() {
         try {
             val response = RetrofitClient.apiService.getRoomPosts(room.roomId)
             if (response.isSuccessful && response.body() != null) {
-                posts = response.body()!!.posts
+                posts = response.body()!!
                 errorMessage = null
             } else {
                 errorMessage = "Could not load posts"
@@ -105,17 +102,17 @@ fun RoomFeedScreen(
 
         when {
             isLoading -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Box(modifier = Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
                     CircularProgressIndicator(color = roomColor)
                 }
             }
             errorMessage != null -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Box(modifier = Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
                     Text(text = errorMessage!!, fontSize = 14.sp, color = TextSecondary)
                 }
             }
             posts.isEmpty() -> {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Box(modifier = Modifier.fillMaxWidth().weight(1f), contentAlignment = Alignment.Center) {
                     Text(
                         text = "No posts here yet.\nBe the first to share.",
                         fontSize = 15.sp,
@@ -220,7 +217,7 @@ private fun PostCard(post: Post, roomColor: Color, onClick: () -> Unit, onMeTooC
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Text(
-                    text = "${post.commentCount} comments",
+                    text = "${post.comments.size} comments",
                     fontSize = 13.sp,
                     color = TextSecondary
                 )

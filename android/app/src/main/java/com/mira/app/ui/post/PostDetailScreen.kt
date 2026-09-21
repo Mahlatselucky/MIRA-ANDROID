@@ -43,24 +43,8 @@ fun PostDetailScreen(
     val scope = rememberCoroutineScope()
 
     LaunchedEffect(post.postId) {
-        try {
-            val response = RetrofitClient.apiService.getPostDetail(post.postId)
-            if (response.isSuccessful && response.body() != null) {
-                val detail = response.body()!!
-                comments = detail.comments
-                currentPost = currentPost.copy(
-                    meTooCount = detail.meTooCount,
-                    commentCount = detail.commentCount,
-                    userHasTappedMeToo = detail.userHasTappedMeToo
-                )
-            } else {
-                errorMessage = "Could not load this post"
-            }
-        } catch (e: Exception) {
-            errorMessage = "Could not reach the server. Check your connection."
-        } finally {
-            isLoading = false
-        }
+        comments = post.comments
+        isLoading = false
     }
 
     Column(
@@ -240,8 +224,8 @@ fun PostDetailScreen(
                                 CreateCommentRequest(textToSend)
                             )
                             if (response.isSuccessful && response.body() != null) {
-                                comments = comments + response.body()!!
-                                currentPost = currentPost.copy(commentCount = currentPost.commentCount + 1)
+                                comments = response.body()!!.comments
+                                currentPost = currentPost.copy(commentCount = comments.size)
                                 commentText = ""
                             }
                         } catch (e: Exception) {

@@ -111,10 +111,7 @@ fun CreatePostScreen(
                     isLoading = true
                     scope.launch {
                         try {
-                            val response = RetrofitClient.apiService.createPost(
-                                room.roomId,
-                                CreatePostRequest(content.trim())
-                            )
+                            val response = RetrofitClient.apiService.createPost(CreatePostRequest(room.roomId, content.trim()))
                             if (response.isSuccessful && response.body() != null) {
                                 onPostCreated(response.body()!!)
                             } else {
