@@ -1,10 +1,10 @@
-# MIRA🧡🫂
+# MIRA
 
 MIRA is an anonymous peer support app for Android. It gives people a safe space to share what they are going through, read that others feel the same way, and keep a private journal. The idea behind the app is one sentence that appears on the login screen: "You're not the only one."
 
 ## Video demonstration
 
-Watch the full demonstration here: [LINK HERE]
+Watch the full demonstration here: [PASTE VIDEO LINK HERE]
 
 ## Purpose of the app
 
@@ -13,43 +13,34 @@ Many people struggle in silence with things like anxiety, skin problems, family 
 ## Screenshots
 
 Login screen
-<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 04" src="https://github.com/user-attachments/assets/827db486-7cbf-4bc5-a753-7d5c3ae54dab" />
-
+<img src="screenshots/01-login.png" alt="Login screen" width="260">
 
 Register screen
-<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 05" src="https://github.com/user-attachments/assets/eca1c34e-e0a3-4470-930f-4791446da99a" />
-
+<img src="screenshots/02-register.png" alt="Register screen" width="260">
 
 Rooms list, with a colour and icon for each room
-<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 06" src="https://github.com/user-attachments/assets/f199a27d-2857-4736-b462-5ba768ea0411" />
-
+<img src="screenshots/03-rooms.png" alt="Rooms list" width="260">
 
 A room feed with posts
-<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 07" src="https://github.com/user-attachments/assets/86fab7ed-d01e-4d71-888e-93ab7b9700f5" />
-
+<img src="screenshots/04-room-feed.png" alt="Room feed" width="260">
 
 Creating an anonymous post
-<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 071" src="https://github.com/user-attachments/assets/88a1d27d-7238-4f07-80e1-d4d38a87fbb9" />
-
+<img src="screenshots/05-create-post.png" alt="Create post" width="260">
 
 A post with a comment and the Me too button
-<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 08" src="https://github.com/user-attachments/assets/c4886f8d-7ca9-4dac-b6cb-722f4200d1e8" />
-
+<img src="screenshots/06-post-detail.png" alt="Post detail" width="260">
 
 The private journal
-<img src="screenshots/07-journal.png" alt="Journal" width="220">
+<img src="screenshots/07-journal.png" alt="Journal" width="260">
 
 Writing a new journal entry
-<img src="screenshots/08-new-entry.png" alt="New journal entry" width="220">
+<img src="screenshots/08-new-entry.png" alt="New journal entry" width="260">
 
 Settings
-<img src="screenshots/09-settings.png" alt="Settings" width="220">
+<img src="screenshots/09-settings.png" alt="Settings" width="260">
 
 ## Features in this prototype
 
-<<<<<<< HEAD
-* Register and log in with an email and password. Passwords are hashed on the server before they are stored. ****
-=======
 * Register and log in with an email and password. Passwords are hashed on the server before they are stored.
 * The login token is saved on the phone, so the user stays signed in until they log out.
 * A settings screen where the user picks a preferred language and turns notifications on or off. The choices are saved to the server.
@@ -136,6 +127,9 @@ Our workflow is in .github/workflows/android.yml and is called Android CI. It ru
 6. Uploads the APK so anyone can download it
 
 This makes sure the app builds and the tests pass on a clean computer and not only on ours.
+
+A passing run:
+<img src="screenshots/10-github-actions.png" alt="GitHub Actions run" width="600">
 
 ## How to run the app
 
