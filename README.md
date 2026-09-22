@@ -21,7 +21,7 @@ Register screen
 
 
 Rooms list, with a colour and icon for each room
-<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 06" src="https://github.com/user-attachments/assets/f199a27d-2857-4736-b462-5ba768ea0411" />
+<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 06" src="https://github.com/user-attachments/assets/f199a27d-2857-4736-b462-5ba768ea0411" />
 
 
 A room feed with posts
