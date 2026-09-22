@@ -1,5 +1,13 @@
 package com.mira.app.model
 
+/**
+ * Data classes that match the JSON returned by our REST API.
+ * Some fields use @SerializedName with alternate names because the backend
+ * names some fields differently to what we first expected, for example
+ * comment text is called "comment" and journal text is called "entry".
+ * Default values protect the app from crashing if a field is ever missing.
+ */
+
 import com.google.gson.annotations.SerializedName
 
 data class RegisterRequest(

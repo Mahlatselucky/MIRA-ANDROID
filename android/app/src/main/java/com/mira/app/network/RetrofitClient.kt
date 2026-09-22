@@ -1,5 +1,11 @@
 package com.mira.app.network
 
+/**
+ * Builds the single Retrofit instance the whole app uses to reach our REST
+ * API, hosted on Render. The base URL points at the live server.
+ * See: https://square.github.io/retrofit/
+ */
+
 import android.content.Context
 import com.mira.app.data.TokenManager
 import okhttp3.Interceptor

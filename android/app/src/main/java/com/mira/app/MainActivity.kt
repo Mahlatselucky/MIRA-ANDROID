@@ -1,5 +1,10 @@
 package com.mira.app
 
+/**
+ * Entry point of the app. Sets up the theme and hosts the navigation
+ * between the login, register, rooms, feed, post, journal and settings screens.
+ */
+
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

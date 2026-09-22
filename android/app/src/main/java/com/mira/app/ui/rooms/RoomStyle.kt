@@ -1,5 +1,11 @@
 package com.mira.app.ui.rooms
 
+/**
+ * Gives each room its own accent colour and icon, based on the room's name.
+ * The backend does not send a colour or icon for rooms, so this is decided
+ * entirely on the app side.
+ */
+
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Favorite

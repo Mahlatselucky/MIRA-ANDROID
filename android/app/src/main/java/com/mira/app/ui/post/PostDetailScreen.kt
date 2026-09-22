@@ -1,5 +1,12 @@
 package com.mira.app.ui.post
 
+/**
+ * Shows one post along with its comments, and lets the user add a new
+ * comment. The backend has no separate endpoint to fetch a single post, so
+ * this screen uses the comments that were already included with the post
+ * when the feed was loaded.
+ */
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

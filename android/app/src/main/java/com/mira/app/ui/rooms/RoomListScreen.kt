@@ -1,5 +1,11 @@
 package com.mira.app.ui.rooms
 
+/**
+ * Shows the list of support rooms. Loads each room from the API, then loads
+ * that room's posts separately to work out how many posts it has, since the
+ * backend does not send a post count on the room itself.
+ */
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

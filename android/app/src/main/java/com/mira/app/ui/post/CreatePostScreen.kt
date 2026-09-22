@@ -1,5 +1,9 @@
 package com.mira.app.ui.post
 
+/**
+ * Lets the user write and submit a new anonymous post to a room.
+ */
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape

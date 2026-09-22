@@ -1,5 +1,11 @@
 package com.mira.app.data
 
+/**
+ * Saves and reads the user's login token using SharedPreferences, so the
+ * user stays signed in after closing the app. The token is sent on every
+ * request after login as an Authorization header (see RetrofitClient).
+ */
+
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences

@@ -1,5 +1,10 @@
 package com.mira.app.ui.feed
 
+/**
+ * Shows the posts inside one room, and lets the user create a new post or
+ * tap Me Too on an existing one.
+ */
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

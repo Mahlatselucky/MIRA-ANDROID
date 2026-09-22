@@ -41,7 +41,11 @@ Settings
 
 ## Features in this prototype
 
+<<<<<<< HEAD
 * Register and log in with an email and password. Passwords are hashed on the server before they are stored. ****
+=======
+* Register and log in with an email and password. Passwords are hashed on the server before they are stored.
+>>>>>>> f660aeb (Confirm password hashing in README)
 * The login token is saved on the phone, so the user stays signed in until they log out.
 * A settings screen where the user picks a preferred language and turns notifications on or off. The choices are saved to the server.
 * Five rooms: Anxiety & Depression, Skin & Acne, Family Issues, Gambling and Substance Abuse.

@@ -1,5 +1,12 @@
 package com.mira.app.network
 
+/**
+ * Defines every REST endpoint the app calls. The paths and HTTP methods here
+ * were matched to the live backend by testing with curl, since some of them
+ * (for example creating a post, and toggling Me Too) did not match our first
+ * guesses. See README.md for the full list of endpoints.
+ */
+
 import com.mira.app.model.AuthResponse
 import com.mira.app.model.Comment
 import com.mira.app.model.CreateCommentRequest

@@ -1,5 +1,10 @@
 package com.mira.app.ui.journal
 
+/**
+ * Shows the user's private journal entries and lets them add a new one.
+ * Journal entries are only visible to the user who wrote them.
+ */
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn

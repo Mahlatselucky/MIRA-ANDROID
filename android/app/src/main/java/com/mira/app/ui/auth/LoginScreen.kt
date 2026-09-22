@@ -1,5 +1,10 @@
 package com.mira.app.ui.auth
 
+/**
+ * Login screen. Sends the user's email and password to the API, saves the
+ * returned token with TokenManager, and passes control to the rooms screen.
+ */
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

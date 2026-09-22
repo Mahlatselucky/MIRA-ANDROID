@@ -1,5 +1,10 @@
 package com.mira.app.ui.settings
 
+/**
+ * Lets the user change their preferred language and notification setting,
+ * and log out of the app.
+ */
+
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*

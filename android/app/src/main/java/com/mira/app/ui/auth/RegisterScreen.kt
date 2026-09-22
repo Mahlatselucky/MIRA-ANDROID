@@ -1,5 +1,10 @@
 package com.mira.app.ui.auth
 
+/**
+ * Register screen. Creates a new account, validates the password length and
+ * confirmation, then logs the user in the same way as LoginScreen.
+ */
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
