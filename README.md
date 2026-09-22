@@ -74,7 +74,7 @@ We designed MIRA to feel calm and warm, because people using it may already be h
 
 ## How the app uses the REST API
 
-The app talks to a REST API that we created and host on Render. The API stores its data in an online database. [CONFIRM DATABASE NAME WITH ISAM]
+The app talks to a REST API that we created and host on Render. The API stores its data in a MongoDB database.
 
 Base address: https://mira-android.onrender.com/
 
