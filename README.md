@@ -13,22 +13,28 @@ Many people struggle in silence with things like anxiety, skin problems, family 
 ## Screenshots
 
 Login screen
-![Login screen](screenshots/01-login.png)
+<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 04" src="https://github.com/user-attachments/assets/827db486-7cbf-4bc5-a753-7d5c3ae54dab" />
+
 
 Register screen
-![Register screen](screenshots/02-register.png)
+<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 05" src="https://github.com/user-attachments/assets/eca1c34e-e0a3-4470-930f-4791446da99a" />
+
 
 Rooms list, with a colour and icon for each room
-![Rooms list](screenshots/03-rooms.png)
+<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 06" src="https://github.com/user-attachments/assets/f199a27d-2857-4736-b462-5ba768ea0411" />
+
 
 A room feed with posts
-![Room feed](screenshots/04-room-feed.png)
+<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 07" src="https://github.com/user-attachments/assets/86fab7ed-d01e-4d71-888e-93ab7b9700f5" />
+
 
 Creating an anonymous post
-![Create post](screenshots/05-create-post.png)
+<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 071" src="https://github.com/user-attachments/assets/88a1d27d-7238-4f07-80e1-d4d38a87fbb9" />
+
 
 A post with a comment and the Me too button
-![Post detail](screenshots/06-post-detail.png)
+<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 08" src="https://github.com/user-attachments/assets/c4886f8d-7ca9-4dac-b6cb-722f4200d1e8" />
+
 
 The private journal
 ![Journal](screenshots/07-journal.png)
