@@ -17,7 +17,7 @@ Login screen
 
 
 Register screen
-<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 05" src="https://github.com/user-attachments/assets/eca1c34e-e0a3-4470-930f-4791446da99a" />
+<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 05" src="https://github.com/user-attachments/assets/eca1c34e-e0a3-4470-930f-4791446da99a" />
 
 
 Rooms list, with a colour and icon for each room
@@ -25,15 +25,15 @@ Rooms list, with a colour and icon for each room
 
 
 A room feed with posts
-<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 07" src="https://github.com/user-attachments/assets/86fab7ed-d01e-4d71-888e-93ab7b9700f5" />
+<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 07" src="https://github.com/user-attachments/assets/86fab7ed-d01e-4d71-888e-93ab7b9700f5" />
 
 
 Creating an anonymous post
-<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 071" src="https://github.com/user-attachments/assets/88a1d27d-7238-4f07-80e1-d4d38a87fbb9" />
+<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 071" src="https://github.com/user-attachments/assets/88a1d27d-7238-4f07-80e1-d4d38a87fbb9" />
 
 
 A post with a comment and the Me too button
-<img width="738" height="1600" alt="WhatsApp Image 2026-09-22 at 11 01 08" src="https://github.com/user-attachments/assets/c4886f8d-7ca9-4dac-b6cb-722f4200d1e8" />
+<img width="400" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 08" src="https://github.com/user-attachments/assets/c4886f8d-7ca9-4dac-b6cb-722f4200d1e8" />
 
 
 The private journal
