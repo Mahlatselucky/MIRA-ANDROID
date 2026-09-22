@@ -4,7 +4,7 @@ MIRA is an anonymous peer support app for Android. It gives people a safe space 
 
 ## Video demonstration
 
-Watch the full demonstration here: [PASTE VIDEO LINK HERE]
+Watch the full demonstration here: [LINK HERE]
 
 ## Purpose of the app
 
