@@ -37,13 +37,13 @@ A post with a comment and the Me too button
 
 
 The private journal
-![Journal](screenshots/07-journal.png)
+<img src="screenshots/07-journal.png" alt="Journal" width="220">
 
 Writing a new journal entry
-![New journal entry](screenshots/08-new-entry.png)
+<img src="screenshots/08-new-entry.png" alt="New journal entry" width="220">
 
 Settings
-![Settings](screenshots/09-settings.png)
+<img src="screenshots/09-settings.png" alt="Settings" width="220">
 
 ## Features in this prototype
 
