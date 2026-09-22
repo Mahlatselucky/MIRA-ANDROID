@@ -1,4 +1,4 @@
-# MIRA
+# MIRA🧡🫂
 
 MIRA is an anonymous peer support app for Android. It gives people a safe space to share what they are going through, read that others feel the same way, and keep a private journal. The idea behind the app is one sentence that appears on the login screen: "You're not the only one."
 
