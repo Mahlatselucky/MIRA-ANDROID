@@ -132,9 +132,6 @@ Our workflow is in .github/workflows/android.yml and is called Android CI. It ru
 
 This makes sure the app builds and the tests pass on a clean computer and not only on ours.
 
-A passing run:
-![GitHub Actions run](screenshots/10-github-actions.png)
-
 ## How to run the app
 
 1. Clone this repository.
