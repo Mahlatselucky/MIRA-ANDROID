@@ -13,7 +13,7 @@ Many people struggle in silence with things like anxiety, skin problems, family 
 ## Screenshots
 
 Login screen
-<img width="650" height="850" alt="WhatsApp Image 2026-09-22 at 11 01 04" src="https://github.com/user-attachments/assets/827db486-7cbf-4bc5-a753-7d5c3ae54dab" />
+<img width="550" height="700" alt="WhatsApp Image 2026-09-22 at 11 01 04" src="https://github.com/user-attachments/assets/827db486-7cbf-4bc5-a753-7d5c3ae54dab" />
 
 
 Register screen
