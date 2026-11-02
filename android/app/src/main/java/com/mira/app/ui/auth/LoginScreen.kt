@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -66,13 +67,13 @@ fun LoginScreen(
         )
 
         Text(
-            text = "Welcome",
+            text = stringResource(R.string.login_welcome),
             fontSize = 36.sp,
             fontWeight = FontWeight.Bold,
             color = Terracotta
         )
         Text(
-            text = "You're not the only one.",
+            text = stringResource(R.string.login_subtitle),
             fontSize = 17.sp,
             color = TextSecondary,
             modifier = Modifier.padding(bottom = 32.dp)
@@ -81,7 +82,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
+            label = { Text(stringResource(R.string.login_email)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             singleLine = true,
             shape = RoundedCornerShape(16.dp),
@@ -94,7 +95,7 @@ fun LoginScreen(
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = { Text(stringResource(R.string.login_password)) },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
@@ -149,7 +150,7 @@ fun LoginScreen(
                 .height(52.dp)
         ) {
             Text(
-                if (isLoading) "Logging in..." else "Log in",
+                if (isLoading) stringResource(R.string.login_loading) else stringResource(R.string.login_button),
                 fontWeight = FontWeight.SemiBold
             )
         }
@@ -157,7 +158,7 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         TextButton(onClick = onNavigateToRegister) {
-            Text("Don't have an account? Register", color = Terracotta)
+            Text(stringResource(R.string.login_no_account), color = Terracotta)
         }
     }
 }

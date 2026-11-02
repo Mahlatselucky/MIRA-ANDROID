@@ -2,9 +2,12 @@ package com.mira.app.ui.settings
 
 /**
  * Lets the user change their preferred language and notification setting,
- * and log out of the app.
+ * and log out of the app. Tapping a language chip switches the app's
+ * display language immediately via LocaleHelper, and Save changes also
+ * persists the choice to the server.
  */
 
+import android.app.Activity
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -16,9 +19,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.mira.app.R
+import com.mira.app.data.LocaleHelper
 import com.mira.app.data.TokenManager
 import com.mira.app.model.UpdateSettingsRequest
 import com.mira.app.network.RetrofitClient
@@ -34,7 +40,7 @@ fun SettingsScreen(
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    var preferredLanguage by remember { mutableStateOf("en") }
+    var preferredLanguage by remember { mutableStateOf(LocaleHelper.getSavedLanguage(context)) }
     var notificationsEnabled by remember { mutableStateOf(true) }
     var isLoading by remember { mutableStateOf(false) }
     var statusMessage by remember { mutableStateOf<String?>(null) }
@@ -43,7 +49,7 @@ fun SettingsScreen(
         try {
             val response = RetrofitClient.apiService.getSettings()
             if (response.isSuccessful && response.body() != null) {
-                preferredLanguage = response.body()!!.preferredLanguage
+                // the device language (LocaleHelper) decides which chip is selected
                 notificationsEnabled = response.body()!!.notificationsEnabled
             }
         } catch (e: Exception) {
@@ -64,7 +70,7 @@ fun SettingsScreen(
                 .padding(horizontal = 24.dp, vertical = 24.dp)
         ) {
             Text(
-                text = "Settings",
+                text = stringResource(R.string.settings_title),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
@@ -83,13 +89,20 @@ fun SettingsScreen(
                     .background(Color.White)
                     .padding(18.dp)
             ) {
-                Text(text = "Language", fontWeight = FontWeight.SemiBold)
+                Text(text = stringResource(R.string.settings_language), fontWeight = FontWeight.SemiBold)
                 Spacer(modifier = Modifier.height(10.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    listOf("en" to "English", "zu" to "isiZulu", "af" to "Afrikaans").forEach { (code, label) ->
+                    listOf(
+                        "en" to stringResource(R.string.lang_english),
+                        "zu" to stringResource(R.string.lang_zulu),
+                        "af" to stringResource(R.string.lang_afrikaans)
+                    ).forEach { (code, label) ->
                         FilterChip(
                             selected = preferredLanguage == code,
-                            onClick = { preferredLanguage = code },
+                            onClick = {
+                                preferredLanguage = code
+                                LocaleHelper.setLocale(context as Activity, code)
+                            },
                             label = { Text(label) },
                             shape = RoundedCornerShape(50),
                             colors = FilterChipDefaults.filterChipColors(
@@ -113,7 +126,7 @@ fun SettingsScreen(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Notifications", fontWeight = FontWeight.SemiBold)
+                Text(text = stringResource(R.string.settings_notifications), fontWeight = FontWeight.SemiBold)
                 Switch(
                     checked = notificationsEnabled,
                     onCheckedChange = { notificationsEnabled = it },
@@ -128,7 +141,7 @@ fun SettingsScreen(
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
                     text = it,
-                    color = if (it == "Settings saved") Teal else MaterialTheme.colorScheme.error,
+                    color = if (it == stringResource(R.string.settings_saved)) Teal else MaterialTheme.colorScheme.error,
                     fontSize = 13.sp
                 )
             }
@@ -147,9 +160,9 @@ fun SettingsScreen(
                                     notificationsEnabled = notificationsEnabled
                                 )
                             )
-                            statusMessage = if (response.isSuccessful) "Settings saved" else "Could not save settings"
+                            statusMessage = if (response.isSuccessful) context.getString(R.string.settings_saved) else "Could not save settings"
                         } catch (e: Exception) {
-            android.util.Log.e("MIRA", "Request failed in SettingsScreen", e)
+                            android.util.Log.e("MIRA", "Request failed in SettingsScreen", e)
                             statusMessage = "Could not reach the server"
                         } finally {
                             isLoading = false
@@ -167,7 +180,7 @@ fun SettingsScreen(
                     .height(52.dp)
             ) {
                 Text(
-                    if (isLoading) "Saving..." else "Save changes",
+                    if (isLoading) stringResource(R.string.settings_saving) else stringResource(R.string.settings_save),
                     fontWeight = FontWeight.SemiBold
                 )
             }
@@ -177,6 +190,7 @@ fun SettingsScreen(
             OutlinedButton(
                 onClick = {
                     TokenManager.getInstance(context).clearToken()
+                    com.mira.app.data.JournalDb(context).clearAll()
                     onLogout()
                 },
                 shape = RoundedCornerShape(50),
@@ -186,7 +200,7 @@ fun SettingsScreen(
                     .fillMaxWidth()
                     .height(52.dp)
             ) {
-                Text("Log out", fontWeight = FontWeight.SemiBold)
+                Text(stringResource(R.string.settings_logout), fontWeight = FontWeight.SemiBold)
             }
         }
     }

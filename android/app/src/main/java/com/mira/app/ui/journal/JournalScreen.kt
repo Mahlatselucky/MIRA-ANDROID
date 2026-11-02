@@ -3,8 +3,16 @@ package com.mira.app.ui.journal
 /**
  * Shows the user's private journal entries and lets them add a new one.
  * Journal entries are only visible to the user who wrote them.
+ *
+ * Offline mode: the screen always reads from the local SQLite copy (JournalDb),
+ * so it works with no connection. New entries are saved on the phone first and
+ * marked "Waiting to sync". When the network comes back (or the screen opens
+ * while online) the waiting entries are sent to the server and the list is refreshed.
  */
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -16,10 +24,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.mira.app.R
+import com.mira.app.data.JournalDb
 import com.mira.app.model.CreateJournalRequest
 import com.mira.app.model.JournalEntry
 import com.mira.app.network.RetrofitClient
@@ -27,34 +39,61 @@ import com.mira.app.ui.theme.Cream
 import com.mira.app.ui.theme.Terracotta
 import com.mira.app.ui.theme.TextSecondary
 import kotlinx.coroutines.launch
+import java.util.concurrent.atomic.AtomicBoolean
 
 @Composable
 fun JournalScreen() {
-    var entries by remember { mutableStateOf<List<JournalEntry>>(emptyList()) }
+    val context = LocalContext.current
+    val db = remember { JournalDb(context) }
+    var entries by remember { mutableStateOf(db.getAll()) }
     var isLoading by remember { mutableStateOf(true) }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+    var offline by remember { mutableStateOf(false) }
     var showNewEntryDialog by remember { mutableStateOf(false) }
+    val syncing = remember { AtomicBoolean(false) }
     val scope = rememberCoroutineScope()
 
-    suspend fun loadEntries() {
+    /** Sends waiting entries to the server, then pulls the latest list into the phone database. */
+    suspend fun syncNow() {
+        if (!syncing.compareAndSet(false, true)) return
         try {
+            for ((localId, text) in db.getPending()) {
+                val response = RetrofitClient.apiService.createJournalEntry(CreateJournalRequest(text))
+                val body = response.body()
+                if (response.isSuccessful && body != null) {
+                    db.markSynced(localId, body.entryId, body.createdAt)
+                } else {
+                    break
+                }
+            }
             val response = RetrofitClient.apiService.getJournalEntries()
             if (response.isSuccessful && response.body() != null) {
-                entries = response.body()!!
-                errorMessage = null
-            } else {
-                errorMessage = "Could not load journal entries"
+                db.replaceWithServer(response.body()!!)
             }
+            offline = false
         } catch (e: Exception) {
-            android.util.Log.e("MIRA", "Request failed in JournalScreen", e)
-            errorMessage = "Could not reach the server. Check your connection."
+            android.util.Log.e("MIRA", "Journal sync failed, staying offline", e)
+            offline = true
         } finally {
+            entries = db.getAll()
             isLoading = false
+            syncing.set(false)
         }
     }
 
     LaunchedEffect(Unit) {
-        loadEntries()
+        syncNow()
+    }
+
+    // Sync automatically whenever the phone gets a network connection back.
+    DisposableEffect(Unit) {
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val callback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                scope.launch { syncNow() }
+            }
+        }
+        cm.registerDefaultNetworkCallback(callback)
+        onDispose { cm.unregisterNetworkCallback(callback) }
     }
 
     Column(
@@ -69,21 +108,33 @@ fun JournalScreen() {
                 .padding(horizontal = 24.dp, vertical = 24.dp)
         ) {
             Text(
-                text = "My journal",
+                text = stringResource(R.string.journal_title),
                 fontSize = 28.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color.White
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = "Private. Only you can see this.",
+                text = stringResource(R.string.journal_subtitle),
                 fontSize = 14.sp,
                 color = Color.White.copy(alpha = 0.85f)
             )
         }
 
+        if (offline) {
+            Text(
+                text = stringResource(R.string.journal_offline_banner),
+                fontSize = 12.sp,
+                color = Color.White,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(TextSecondary)
+                    .padding(horizontal = 24.dp, vertical = 8.dp)
+            )
+        }
+
         when {
-            isLoading -> {
+            isLoading && entries.isEmpty() -> {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -91,21 +142,6 @@ fun JournalScreen() {
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator(color = Terracotta)
-                }
-            }
-            errorMessage != null -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(24.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Text(
-                        text = errorMessage!!,
-                        fontSize = 14.sp,
-                        color = MaterialTheme.colorScheme.error
-                    )
                 }
             }
             entries.isEmpty() -> {
@@ -116,7 +152,7 @@ fun JournalScreen() {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Nothing written yet.",
+                        text = stringResource(R.string.journal_empty),
                         fontSize = 14.sp,
                         color = TextSecondary
                     )
@@ -144,6 +180,15 @@ fun JournalScreen() {
                             )
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(text = entry.content, fontSize = 15.sp)
+                            if (entry.entryId.startsWith("local-")) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = stringResource(R.string.journal_pending),
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Medium,
+                                    color = TextSecondary
+                                )
+                            }
                         }
                     }
                 }
@@ -162,7 +207,7 @@ fun JournalScreen() {
                 contentColor = Color.White
             )
         ) {
-            Text("+ New journal entry", fontWeight = FontWeight.SemiBold)
+            Text(stringResource(R.string.journal_new_entry), fontWeight = FontWeight.SemiBold)
         }
     }
 
@@ -170,21 +215,11 @@ fun JournalScreen() {
         NewJournalEntryDialog(
             onDismiss = { showNewEntryDialog = false },
             onSave = { text ->
-                scope.launch {
-                    try {
-                        val response = RetrofitClient.apiService.createJournalEntry(
-                            CreateJournalRequest(text)
-                        )
-                        if (response.isSuccessful && response.body() != null) {
-                            entries = listOf(response.body()!!) + entries
-                        }
-                    } catch (e: Exception) {
-            android.util.Log.e("MIRA", "Request failed in JournalScreen", e)
-                        // silently ignore for now
-                    } finally {
-                        showNewEntryDialog = false
-                    }
-                }
+                // Save on the phone first so nothing is lost, then try to sync straight away.
+                db.addPending(text, java.time.Instant.now().toString())
+                entries = db.getAll()
+                showNewEntryDialog = false
+                scope.launch { syncNow() }
             }
         )
     }
@@ -203,7 +238,7 @@ private fun NewJournalEntryDialog(onDismiss: () -> Unit, onSave: (String) -> Uni
                 .padding(24.dp)
         ) {
             Text(
-                text = "New entry",
+                text = stringResource(R.string.journal_dialog_title),
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold,
                 color = Terracotta
@@ -212,7 +247,7 @@ private fun NewJournalEntryDialog(onDismiss: () -> Unit, onSave: (String) -> Uni
             OutlinedTextField(
                 value = text,
                 onValueChange = { text = it },
-                placeholder = { Text("What's on your mind today?", color = TextSecondary) },
+                placeholder = { Text(stringResource(R.string.journal_dialog_hint), color = TextSecondary) },
                 modifier = Modifier.fillMaxWidth(),
                 minLines = 4,
                 shape = RoundedCornerShape(16.dp),
@@ -226,7 +261,7 @@ private fun NewJournalEntryDialog(onDismiss: () -> Unit, onSave: (String) -> Uni
             Spacer(modifier = Modifier.height(18.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 TextButton(onClick = onDismiss) {
-                    Text("Cancel", color = TextSecondary)
+                    Text(stringResource(R.string.journal_cancel), color = TextSecondary)
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(
@@ -238,7 +273,7 @@ private fun NewJournalEntryDialog(onDismiss: () -> Unit, onSave: (String) -> Uni
                         contentColor = Color.White
                     )
                 ) {
-                    Text("Save", fontWeight = FontWeight.SemiBold)
+                    Text(stringResource(R.string.journal_save), fontWeight = FontWeight.SemiBold)
                 }
             }
         }

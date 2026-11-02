@@ -1,0 +1,48 @@
+<resources>
+    <string name="settings_title">Instellings</string>
+    <string name="settings_language">Taal</string>
+    <string name="settings_notifications">Kennisgewings</string>
+    <string name="settings_save">Stoor veranderinge</string>
+    <string name="settings_saving">Stoor tans...</string>
+    <string name="settings_saved">Instellings gestoor</string>
+    <string name="settings_logout">Teken uit</string>
+    <string name="lang_english">Engels</string>
+    <string name="lang_zulu">isiZulu</string>
+    <string name="lang_afrikaans">Afrikaans</string>
+
+    <string name="login_welcome">Welkom</string>
+    <string name="login_subtitle">Jy is nie die enigste een nie.</string>
+    <string name="login_email">E-pos</string>
+    <string name="login_password">Wagwoord</string>
+    <string name="login_button">Meld aan</string>
+    <string name="login_no_account">Het jy nie \'n rekening nie? Registreer</string>
+
+    <string name="register_title">Skep jou rekening</string>
+    <string name="register_subtitle">Jou aanmelding is privaat. Wat jy plaas bly anoniem.</string>
+    <string name="register_confirm_password">Bevestig wagwoord</string>
+    <string name="register_button">Registreer</string>
+    <string name="register_have_account">Het jy reeds \'n rekening? Meld aan</string>
+
+    <string name="rooms_title">Kamers</string>
+    <string name="rooms_subtitle">Kies \'n ruimte wat pas by wat jy deurmaak</string>
+
+    <string name="journal_title">My joernaal</string>
+    <string name="journal_subtitle">Privaat. Net jy kan dit sien.</string>
+    <string name="journal_new_entry">+ Nuwe joernaalinskrywing</string>
+    <string name="journal_empty">Nog niks geskryf nie.</string>
+    <string name="journal_dialog_title">Nuwe inskrywing</string>
+    <string name="journal_dialog_hint">Wat is op jou gedagtes vandag?</string>
+    <string name="journal_cancel">Kanselleer</string>
+    <string name="journal_save">Stoor</string>
+
+    <string name="login_loading">Meld tans aan...</string>
+    <string name="register_loading">Skep tans rekening...</string>
+    <string name="rooms_post_single">1 plasing</string>
+    <string name="rooms_post_count">%1$d plasings</string>
+    <string name="nav_home">Tuis</string>
+    <string name="nav_journal">Joernaal</string>
+    <string name="nav_settings">Instellings</string>
+
+    <string name="journal_offline_banner">Jy is vanlyn. Jou inskrywings is op hierdie foon gestoor en sal sinkroniseer wanneer jy weer koppel.</string>
+    <string name="journal_pending">Wag om te sinkroniseer</string>
+</resources>

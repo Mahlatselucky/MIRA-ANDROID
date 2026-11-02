@@ -1,0 +1,48 @@
+<resources>
+    <string name="settings_title">Izilungiselelo</string>
+    <string name="settings_language">Ulimi</string>
+    <string name="settings_notifications">Izaziso</string>
+    <string name="settings_save">Londoloza izinguquko</string>
+    <string name="settings_saving">Iyalondoloza...</string>
+    <string name="settings_saved">Izilungiselelo zilondoloziwe</string>
+    <string name="settings_logout">Phuma</string>
+    <string name="lang_english">isiNgisi</string>
+    <string name="lang_zulu">isiZulu</string>
+    <string name="lang_afrikaans">isiBhunu</string>
+
+    <string name="login_welcome">Siyakwamukela</string>
+    <string name="login_subtitle">Awuwedwa kulokhu.</string>
+    <string name="login_email">I-imeyili</string>
+    <string name="login_password">Iphasiwedi</string>
+    <string name="login_button">Ngena</string>
+    <string name="login_no_account">Awunayo i-akhawunti? Bhalisa</string>
+
+    <string name="register_title">Dala i-akhawunti yakho</string>
+    <string name="register_subtitle">Ukungena kwakho kuyimfihlo. Noma yini oyithumelayo ihlala ingaziwa.</string>
+    <string name="register_confirm_password">Qinisekisa iphasiwedi</string>
+    <string name="register_button">Bhalisa</string>
+    <string name="register_have_account">Usunayo i-akhawunti? Ngena</string>
+
+    <string name="rooms_title">Amagumbi</string>
+    <string name="rooms_subtitle">Khetha indawo ehambisana nalokho obhekene nakho</string>
+
+    <string name="journal_title">Ijenali yami</string>
+    <string name="journal_subtitle">Imfihlo. Nguwe kuphela ongabona lokhu.</string>
+    <string name="journal_new_entry">+ Ingxenye entsha yejenali</string>
+    <string name="journal_empty">Akukho okulotshiwe okwamanje.</string>
+    <string name="journal_dialog_title">Ingxenye entsha</string>
+    <string name="journal_dialog_hint">Yini ekengqondweni yakho namuhla?</string>
+    <string name="journal_cancel">Khansela</string>
+    <string name="journal_save">Londoloza</string>
+
+    <string name="login_loading">Iyangena...</string>
+    <string name="register_loading">Iyakha i-akhawunti...</string>
+    <string name="rooms_post_single">Okuthunyelwe: 1</string>
+    <string name="rooms_post_count">Okuthunyelwe: %1$d</string>
+    <string name="nav_home">Ikhaya</string>
+    <string name="nav_journal">Ijenali</string>
+    <string name="nav_settings">Izilungiselelo</string>
+
+    <string name="journal_offline_banner">Awuxhumekile ku-inthanethi. Okulotshiwe kulondolozwe kule foni futhi kuzohlanganiswa uma uxhumeka futhi.</string>
+    <string name="journal_pending">Kulindele ukuhlanganiswa</string>
+</resources>

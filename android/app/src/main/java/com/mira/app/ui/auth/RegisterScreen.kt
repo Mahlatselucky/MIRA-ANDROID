@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -68,13 +69,13 @@ fun RegisterScreen(
         )
 
         Text(
-            text = "Create your account",
+            text = stringResource(R.string.register_title),
             fontSize = 26.sp,
             fontWeight = FontWeight.Bold,
             color = Terracotta
         )
         Text(
-            text = "Your login is private. What you post stays anonymous.",
+            text = stringResource(R.string.register_subtitle),
             fontSize = 13.sp,
             color = TextSecondary,
             textAlign = TextAlign.Center,
@@ -84,7 +85,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
-            label = { Text("Email") },
+            label = { Text(stringResource(R.string.login_email)) },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
             singleLine = true,
             shape = RoundedCornerShape(16.dp),
@@ -97,7 +98,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
-            label = { Text("Password") },
+            label = { Text(stringResource(R.string.login_password)) },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
@@ -111,7 +112,7 @@ fun RegisterScreen(
         OutlinedTextField(
             value = confirmPassword,
             onValueChange = { confirmPassword = it },
-            label = { Text("Confirm password") },
+            label = { Text(stringResource(R.string.register_confirm_password)) },
             visualTransformation = PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             singleLine = true,
@@ -177,7 +178,7 @@ fun RegisterScreen(
                 .height(52.dp)
         ) {
             Text(
-                if (isLoading) "Creating account..." else "Register",
+                if (isLoading) stringResource(R.string.register_loading) else stringResource(R.string.register_button),
                 fontWeight = FontWeight.SemiBold
             )
         }
@@ -185,7 +186,7 @@ fun RegisterScreen(
         Spacer(modifier = Modifier.height(12.dp))
 
         TextButton(onClick = onNavigateToLogin) {
-            Text("Already have an account? Log in", color = Terracotta)
+            Text(stringResource(R.string.register_have_account), color = Terracotta)
         }
     }
 }

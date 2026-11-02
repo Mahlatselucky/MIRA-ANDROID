@@ -14,6 +14,8 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
+import com.mira.app.R
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,9 +61,9 @@ fun RoomListScreen(
 
     Column(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.padding(24.dp)) {
-            Text(text = "Rooms", fontSize = 28.sp, fontWeight = FontWeight.Bold)
+            Text(text = stringResource(R.string.rooms_title), fontSize = 28.sp, fontWeight = FontWeight.Bold)
             Text(
-                text = "Pick a space that fits what you're going through",
+                text = stringResource(R.string.rooms_subtitle),
                 fontSize = 14.sp,
                 color = TextSecondary
             )
@@ -129,7 +131,7 @@ private fun RoomCard(room: Room, onClick: () -> Unit) {
             Text(text = room.name, fontSize = 17.sp, fontWeight = FontWeight.SemiBold)
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = if (room.postCount == 1) "1 post" else "${room.postCount} posts",
+                text = if (room.postCount == 1) stringResource(R.string.rooms_post_single) else stringResource(R.string.rooms_post_count, room.postCount),
                 fontSize = 13.sp,
                 color = TextSecondary
             )

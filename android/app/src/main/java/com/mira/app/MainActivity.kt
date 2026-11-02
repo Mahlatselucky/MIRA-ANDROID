@@ -3,8 +3,11 @@ package com.mira.app
 /**
  * Entry point of the app. Sets up the theme and hosts the navigation
  * between the login, register, rooms, feed, post, journal and settings screens.
+ * attachBaseContext wraps the app in the user's saved language (see LocaleHelper)
+ * before any screen is created, so every string resource loads translated.
  */
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,7 +21,9 @@ import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.Modifier
+import com.mira.app.data.LocaleHelper
 import com.mira.app.data.TokenManager
 import com.mira.app.model.Post
 import com.mira.app.model.Room
@@ -34,6 +39,10 @@ import com.mira.app.ui.settings.SettingsScreen
 import com.mira.app.ui.theme.MIRATheme
 
 class MainActivity : ComponentActivity() {
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.wrapContext(newBase))
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -126,19 +135,19 @@ fun MiraHome(onLogout: () -> Unit) {
                     selected = selectedTab == 0,
                     onClick = { selectedTab = 0 },
                     icon = { Icon(Icons.Default.Home, contentDescription = "Home") },
-                    label = { Text("Home") }
+                    label = { Text(stringResource(R.string.nav_home)) }
                 )
                 NavigationBarItem(
                     selected = selectedTab == 1,
                     onClick = { selectedTab = 1 },
                     icon = { Icon(Icons.Default.MenuBook, contentDescription = "Journal") },
-                    label = { Text("Journal") }
+                    label = { Text(stringResource(R.string.nav_journal)) }
                 )
                 NavigationBarItem(
                     selected = selectedTab == 2,
                     onClick = { selectedTab = 2 },
                     icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
-                    label = { Text("Settings") }
+                    label = { Text(stringResource(R.string.nav_settings)) }
                 )
             }
         }
