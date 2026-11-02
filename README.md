@@ -149,3 +149,22 @@ A passing run:
 GitHub Marketplace (n.d.) Automated build Android app with GitHub Action. Available at: https://github.com/marketplace/actions/automated-build-android-app-with-github-action [Accessed 03 November 2025].
 
 IMAD5112 (n.d.) build.yml. Available at: https://github.com/IMAD5112/Github-actions/blob/main/.github/workflows/build.yml [Accessed 03 November 2025].
+
+## Release notes: Final PoE
+
+These are the updates made since the Part 2 prototype.
+
+### New features
+
+* Multi language support. The app can now be switched between English, isiZulu and Afrikaans from the Settings screen. The change applies straight away to Login, Register, Rooms, Journal, Settings and the bottom tabs. Error messages are still in English.
+* Offline mode with sync for the private journal. Entries are saved in a SQLite database on the phone first, so the journal opens and accepts new entries with no connection. Entries written offline are marked "Waiting to sync" and are sent to the server automatically when the phone reconnects. The local journal is wiped on logout so it stays private.
+
+### Improvements
+
+* The chosen language is remembered on the device, so Login and Register open in the last language picked.
+* Settings now shows the "Settings saved" message in the correct colour in every language.
+
+### Still to come
+
+* Single sign on
+* Real time push notifications
