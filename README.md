@@ -164,7 +164,3 @@ These are the updates made since the Part 2 prototype.
 * The chosen language is remembered on the device, so Login and Register open in the last language picked.
 * Settings now shows the "Settings saved" message in the correct colour in every language.
 
-### Still to come
-
-* Single sign on
-* Real time push notifications
