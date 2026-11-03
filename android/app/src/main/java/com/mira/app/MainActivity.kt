@@ -47,6 +47,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         RetrofitClient.init(applicationContext)
+        com.mira.app.data.MiraMessagingService.createChannel(this)
+        if (android.os.Build.VERSION.SDK_INT >= 33 &&
+            checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) !=
+            android.content.pm.PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 1001)
+        }
+        com.google.firebase.messaging.FirebaseMessaging.getInstance().token
+            .addOnSuccessListener { token ->
+                android.util.Log.d("MIRA", "FCM token: $token")
+                val clipboard = getSystemService(android.content.Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+                clipboard.setPrimaryClip(android.content.ClipData.newPlainText("fcm", token))
+                android.widget.Toast.makeText(this, "Push token received and copied", android.widget.Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener { e ->
+                android.util.Log.e("MIRA", "FCM token failed", e)
+                android.widget.Toast.makeText(this, "Push token failed: " + e.message, android.widget.Toast.LENGTH_LONG).show()
+            }
         setContent {
             MIRATheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->

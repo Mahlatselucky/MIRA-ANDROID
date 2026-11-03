@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "626204447933",
+    "project_id": "mira-b7eee",
+    "storage_bucket": "mira-b7eee.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:626204447933:android:b90073b0697316fad153d4",
+        "android_client_info": {
+          "package_name": "com.mira.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "626204447933-g239eof4u2qjbn7th7sji5rjeaco2d8a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mira.app",
+            "certificate_hash": "4d182464cfbac2be386bf3a211edfcd6789fe419"
+          }
+        },
+        {
+          "client_id": "626204447933-gquoanksmdiqjkcf9pvu3s85rp1k38me.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBBvfX6dvsnEidQEsuPMDh14XYQgbfqkU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "626204447933-gquoanksmdiqjkcf9pvu3s85rp1k38me.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
