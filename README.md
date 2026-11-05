@@ -18,9 +18,9 @@ This project was developed for the **OPSC6312** POE (Portfolio of Evidence).
 
 | Notifications |
 | :---: |
-| <img src="screenshots/ALLOW NOTIFIC....png" width="250"/> |
+| <img src="screenshots/ALLOW NOTIFIpng" width="250"/> |
 
-*(Note: Because your file is named `ALLOW NOTIFIC....png`, you need to check the exact spelling in your folder and update that line in the README if it's different).*
+
 
 ## 📱 App Demonstration Video
 Watch the full walkthrough of the app running on a physical Android device below:
