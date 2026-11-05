@@ -5,9 +5,22 @@
 This project was developed for the **OPSC6312** POE (Portfolio of Evidence).
 
 ## 📱 App Screenshots
-| Room Feed | Private Journal |
-| :---: | :---: |
-| <img src="screenshots/room_feed.png" width="400"/> | <img src="screenshots/journal.png" width="400"/> |
+
+| Login Screen | Rooms List | Room Feed |
+| :---: | :---: | :---: |
+| <img src="screenshots/LOGIN SCREEN.png" width="250"/> | <img src="screenshots/ANXIETY ROOM.png" width="250"/> | <img src="screenshots/FEED ROOM.png" width="250"/> |
+
+| Private Journal | Settings (English) | Settings (isiZulu) |
+| :---: | :---: | :---: |
+| <img src="screenshots/JOURNAL .png" width="250"/> | <img src="screenshots/LANGUAGE SETTINGS.png" width="250"/> | <img src="screenshots/LANGUAGE TO ZULU.png" width="250"/> |
+
+<br>
+
+| Notifications |
+| :---: |
+| <img src="screenshots/ALLOW NOTIFIC....png" width="250"/> |
+
+*(Note: Because your file is named `ALLOW NOTIFIC....png`, you need to check the exact spelling in your folder and update that line in the README if it's different).*
 
 ## 📱 App Demonstration Video
 Watch the full walkthrough of the app running on a physical Android device below:
