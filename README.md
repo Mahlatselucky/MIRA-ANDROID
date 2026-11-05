@@ -1,39 +1,38 @@
-# MaliFlow - Personal Budget Tracker
+# MIRA - Me, I Relate, Anonymously
 
-**MaliFlow** is an Android application built in Kotlin designed to help students and young adults track their spending habits, stick to a budget, and make managing money engaging through gamification. 
+**MIRA** is an Android application built in Kotlin that provides a safe, anonymous space for peer support. The app is designed around a simple idea: most people going through something hard assume they are the only one dealing with it, and that is rarely true. By joining topic rooms and using the "Me too" button, users can find comfort in knowing they are not alone. 
 
-This project was developed for **OPSC6311** POE (Portfolio of Evidence).
+This project was developed for the **OPSC6312** POE (Portfolio of Evidence).
 
 ## 📱 App Demonstration Video
 Watch the full walkthrough of the app running on a physical Android device below:
 *   **YouTube Video:** [INSERT UNLISTED YOUTUBE LINK HERE]
 
-## ✨ The 2 Original Features (For Lecturer Review)
-As required by the brief, I have implemented two original features beyond the minimum requirements. Please look out for these when evaluating:
-1.  **Daily Budget Allowance Indicator:** On the home dashboard, the app automatically calculates how much money the user can safely spend *today* by dividing the remaining monthly budget by the days left in the month.
-2.  **Rollover Budget Option:** Users can toggle a "Rollover" setting per category. If enabled, any unspent budget from the previous month is automatically added to the current month's maximum limit, rewarding disciplined spending.
+## ✨ User-Defined Features (For Lecturer Review)
+As required by the brief, I have implemented additional features beyond the minimum requirements. Please look out for these when evaluating:
+1.  **Private Journal:** A secure, local space where users can log their personal thoughts over time. This data is tied to their account and is completely private (nobody else can see it).
+2.  **Offline Mode with Sync:** If a user writes a post without an internet connection, the app saves the draft locally using RoomDB. Once the connection is restored, the app automatically syncs the post to the server and updates its status.
+3.  **Multi-Language Support:** The app supports English, isiZulu, and Afrikaans, allowing users to express themselves in the language they think in.
 
 ## 🚀 Minimum & Core Features Implemented
-*   **User Authentication:** Register and login securely using local RoomDB.
-*   **Category Management:** Create custom expense categories with emojis.
-*   **Expense Logging:** Add expenses with amount, date, start/end time, description, and category.
-*   **Receipt Photos:** Optionally attach a photo of a receipt to any expense.
-*   **Budget Goals:** Set minimum and maximum monthly budget goals and per-category limits.
-*   **Filterable Views:** View expense lists and category totals by week, month, or custom date range.
-*   **Graphs & Visuals:** Bar charts for daily spending against goals, and pie charts for category breakdowns.
-*   **Visual Dashboard:** Progress bars that turn red when a category is overspent.
-*   **Gamification (Flow Points):** Earn points and unlock badges for daily streaks and meeting budget goals.
+*   **Authentication:** Register and login securely with email/password (passwords are securely hashed) and Google Sign-In (SSO).
+*   **Anonymous Posting:** Users can post anonymously in topic rooms (e.g., Anxiety, Skin and Acne, Substance Abuse) using randomly generated session aliases.
+*   **"Me Too" Interaction:** A core feature allowing users to tap a button to show they relate to a post without having to type a comment.
+*   **Topic Rooms:** Dedicated spaces with their own colour themes, ensuring focused discussions. Sensitive rooms include pinned crisis resource banners.
+*   **Real-Time Notifications:** Push notifications (via Firebase FCM) alert users when someone taps "Me too" or comments on their post, without revealing identities.
+*   **REST API Integration:** The Android app connects to a custom Node.js/Express REST API backed by MongoDB Atlas.
 
 ## 🛠️ Built With
 *   **Language:** Kotlin
-*   **Database:** RoomDB (SQLite) for fully offline local storage.
-*   **Architecture:** Activity-based architecture with ViewBinding.
+*   **Local Database:** RoomDB (used for offline draft caching and the private journal).
+*   **Backend:** Node.js, Express, MongoDB Atlas.
+*   **Authentication:** JWT (JSON Web Tokens) for API auth, Google Sign-In for SSO.
 *   **CI/CD:** GitHub Actions.
 
 ## ⚙️ GitHub Actions & Automated Testing
 This repository is integrated with **GitHub Actions** for Continuous Integration. 
 *   Every time code is pushed to the `main` branch, a workflow automatically triggers.
-*   The workflow runs automated Unit Tests to ensure logic functionality is not broken.
+*   The workflow runs automated Unit Tests to ensure logic and database functionality is not broken.
 *   The workflow builds the Debug APK to verify the code compiles successfully in a clean cloud environment.
 
 ## 📲 App Distribution (Firebase)
@@ -42,13 +41,15 @@ The built APK has been distributed for testing using Firebase App Distribution.
 *   **Release Link:** https://appdistribution.firebase.google.com/testerapps/1:626204447933:android:b90073b0697316fad153d4/releases/07ql8h0cik368
 
 ## 💻 How to Run the Project Locally
-1. Clone this repository: `git clone [INSERT YOUR GITHUB REPO LINK HERE]`
+1. Clone this repository: `git clone https://github.com/Mahlatselucky/MIRA-ANDROID.git`
 2. Open the project in **Android Studio**.
 3. Allow Gradle to sync and download dependencies.
 4. Click **Run** (the green play button) to launch the app on an emulator or connected physical device.
 
 ## 📚 References
+*   TalkLife. (2026). *TalkLife: Peer Support*.
+*   Sober Sidekick. (2026). *Sober Sidekick: Quit Addiction*.
+*   Wisdo. (2026). *Wisdo: Mental Health & Support*.
 *   Android Developers. (2024). *Room Persistence Library*.
-*   Android Developers. (2024). *Navigation Component*.
 *   GitHub Docs. (2024). *GitHub Actions Documentation*.
 *   Firebase. (2024). *App Distribution Documentation*.
