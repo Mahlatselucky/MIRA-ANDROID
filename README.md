@@ -4,6 +4,11 @@
 
 This project was developed for the **OPSC6312** POE (Portfolio of Evidence).
 
+## 📱 App Screenshots
+| Room Feed | Private Journal |
+| :---: | :---: |
+| <img src="screenshots/room_feed.png" width="400"/> | <img src="screenshots/journal.png" width="400"/> |
+
 ## 📱 App Demonstration Video
 Watch the full walkthrough of the app running on a physical Android device below:
 *   **YouTube Video:** [INSERT UNLISTED YOUTUBE LINK HERE]
