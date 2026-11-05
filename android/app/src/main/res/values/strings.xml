@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MIRA</string>
+    <string name="app_name" translatable="false">MIRA</string>
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
