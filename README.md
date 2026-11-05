@@ -18,7 +18,7 @@ This project was developed for the **OPSC6312** POE (Portfolio of Evidence).
 
 | Notifications |
 | :---: |
-| <img src="screenshots/ALLOW NOTIFIpng" width="250"/> |
+| <img src="screenshots/ALLOW NOTIFICATION.png" width="250"/> |
 
 
 
