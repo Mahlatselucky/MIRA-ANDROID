@@ -26,7 +26,7 @@ This project was developed for the **OPSC6312** POE (Portfolio of Evidence).
 Watch the full walkthrough of the app running on a physical Android device below:
 *   **YouTube Video:** [https://youtube.com/shorts/xDgwO1Dh3_Q?si=QaV3KlWK4Kl9IQ82]
 
-## ✨ User-Defined Features (For Lecturer Review)
+## ✨ User-Defined Features 
 As required by the brief, I have implemented additional features beyond the minimum requirements. Please look out for these when evaluating:
 1.  **Private Journal:** A secure, local space where users can log their personal thoughts over time. This data is tied to their account and is completely private (nobody else can see it).
 2.  **Offline Mode with Sync:** If a user writes a post without an internet connection, the app saves the draft locally using RoomDB. Once the connection is restored, the app automatically syncs the post to the server and updates its status.
