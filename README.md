@@ -12,7 +12,7 @@ This project was developed for the **OPSC6312** POE (Portfolio of Evidence).
 
 | Private Journal | Settings (English) | Settings (isiZulu) |
 | :---: | :---: | :---: |
-| <img src="screenshots/JOURNAL .png" width="250"/> | <img src="screenshots/LANGUAGE SETTINGS.png" width="250"/> | <img src="screenshots/LANGUAGE TO ZULU.png" width="250"/> |
+| <img src="screenshots/JOURNAL.png" width="250"/> | <img src="screenshots/LANGUAGE SETTINGS.png" width="250"/> | <img src="screenshots/LANGUAGE TO ZULU.png" width="250"/> |
 
 <br>
 
