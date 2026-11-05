@@ -24,7 +24,7 @@ This project was developed for the **OPSC6312** POE (Portfolio of Evidence).
 
 ## 📱 App Demonstration Video
 Watch the full walkthrough of the app running on a physical Android device below:
-*   **YouTube Video:** [INSERT UNLISTED YOUTUBE LINK HERE]
+*   **YouTube Video:** [https://youtube.com/shorts/xDgwO1Dh3_Q?si=QaV3KlWK4Kl9IQ82]
 
 ## ✨ User-Defined Features (For Lecturer Review)
 As required by the brief, I have implemented additional features beyond the minimum requirements. Please look out for these when evaluating:
